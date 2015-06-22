@@ -38,7 +38,7 @@ def get_services():
     _ports = client.read(child.key+'/ports', dir=True)
     container_ports = []
 
-    for port in _prots.children:
+    for port in _ports.children:
       _prefix , _name_prefix , _port_prefix , ip_port  = port.key[1:].split("/")
       _type = port.value
       ip , port = ip_port.split(":")
