@@ -40,7 +40,7 @@ def get_services():
 
     for port in _ports.children:
       _prefix , _name_prefix , _port_prefix , ip_port  = port.key[1:].split("/")
-      _type = port.value
+      _type = client.read(port.key+'/type').value
       ip , port = ip_port.split(":")
       container_ports.append({"type":_type,"ip":ip,"port":port})
       print "[Info: print ip and port]",_type,ip , port
