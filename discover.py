@@ -26,6 +26,7 @@ def get_services():
   host, port = get_etcd_addr()
   client = etcd.Client(host=host, port=int(port))
   _services = client.read('/services', recursive = True)
+  print _services
   res_services = {}
   for child in _services.children:
     _prefix , container_name = child.key[1:].split("/")
