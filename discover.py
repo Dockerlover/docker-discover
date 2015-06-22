@@ -33,8 +33,8 @@ def get_services():
     print "[Info: print service child key]",child.key[1:]
     _prefix , container_name = child.key[1:].split("/")
     print "[Info: print container_name]",container_name
-    image_name = client.read(child.key+'/image' , recursive = True)
-    container_status = client.read(child.key+'/status' , recursive = True)
+    image_name = client.read(child.key+'/image' , recursive = True).value
+    container_status = client.read(child.key+'/status' , recursive = True).value
     _ports = client.read(child.key+'/ports' , recursive = True)
     container_ports = []
 
