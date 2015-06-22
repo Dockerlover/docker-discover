@@ -26,16 +26,16 @@ def get_services():
   host, port = get_etcd_addr()
   client = etcd.Client(host=host, port=int(port))
   
-  _services = client.read('/services', recursive = True)
+  _services = client.read('/services', dir=True)
   print "[Info: print services]",_services
   res_services = {}
   for child in _services.children:
     print "[Info: print service child key]",child.key[1:]
     _prefix , container_name = child.key[1:].split("/")
     print "[Info: print container_name]",container_name
-    image_name = client.read(child.key+'/image' , recursive = True).value
-    container_status = client.read(child.key+'/status' , recursive = True).value
-    _ports = client.read(child.key+'/ports' , recursive = True)
+    image_name = client.read(child.key+'/image').value
+    container_status = client.read(child.key+'/status').value
+    _ports = client.read(child.key+'/ports', dir=True)
     container_ports = []
 
     for port in _prots.children:
