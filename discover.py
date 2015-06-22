@@ -46,7 +46,8 @@ def get_services():
       "status":container_status,
       "ports":container_ports
     }
-    return res_services
+    
+  return res_services
 
 
 def write_template(services):
