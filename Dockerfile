@@ -4,8 +4,8 @@ FROM docker-register
 MAINTAINER  liuhong1.happy@163.com
 # 安装相关依赖包
 RUN apt-get install -y haproxy && \
-  sed -i 's/^ENABLED=.*/ENABLED=1/' /etc/default/haproxy && \
-  rm -rf /var/lib/apt/lists/*
+  sed -i 's/^ENABLED=.*/ENABLED=1/' /etc/default/haproxy
+
 RUN pip install  Jinja2
 
 # 创建Docker配置文件路径
