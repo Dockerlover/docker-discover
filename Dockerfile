@@ -3,7 +3,7 @@ FROM docker-register
 # 维护人员
 MAINTAINER  liuhong1.happy@163.com
 # 安装相关依赖包
-RUN apt-get install -y haproxy=1.5.3-1~ubuntu14.04.1 && \
+RUN apt-get install -y haproxy && \
   sed -i 's/^ENABLED=.*/ENABLED=1/' /etc/default/haproxy && \
   rm -rf /var/lib/apt/lists/*
 RUN pip install  Jinja2
