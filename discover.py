@@ -23,10 +23,18 @@ def get_etcd_addr():
   return host,port
 
 def reload_haproxy():
-  print "reload haproxy."
+  ret = call(["./reload-haproxy.sh"])
+  if ret != 0:
+    print "reloading haproxy returned: ", ret
+  else:
+    print "reload haproxy failed!"
+  return ret
 
 def write_template(proxy_services):
-  print services
+  template = env.get_template('haproxy.cfg.tmpl')
+  with open("/etc/haproxy.cfg", "w") as f:
+    f.write(template.render(services=proxy_services))
+  return proxy_services
 
 
 def get_services():
