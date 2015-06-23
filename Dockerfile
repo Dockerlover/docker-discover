@@ -5,10 +5,10 @@ MAINTAINER  liuhong1.happy@163.com
 # 添加环境变量
 ENV USER_NAME admin
 ENV SERVICE_ID discover
-ENV DOMAIN_NAME example.com
-# 应用相关的环境变量
-ENV DOCKER_HOST unix:///var/run/docker.sock
 ENV HOST_IP 127.0.0.1
+# 应用相关的环境变量
+ENV DOMAIN_NAME example.com
+ENV DOCKER_HOST unix:///var/run/docker.sock
 ENV ETCD_HOST 127.0.0.1:4001
 # 安装相关依赖包
 RUN apt-get install -y haproxy && \
