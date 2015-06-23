@@ -43,7 +43,7 @@ Docker化haproxy实现服务发现
         HOST_IP=$(hostname --all-ip-addresses | awk '{print $1}')
         ETCD_HOST=$HOST_IP:4001
         
-        docker run -it  -d --name register \
+        docker run -it  -d --name discover \
         --net host -p 127.0.0.1:1936:1936 \
         -e ETCD_HOST=$ETCD_HOST -e HOST_IP=$HOST_IP  \
         -v /var/run:/var/run docker-discover
