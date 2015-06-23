@@ -23,7 +23,7 @@ def get_etcd_addr():
   return host,port
 
 def reload_haproxy():
-  ret = call(["./reload-haproxy.sh"])
+  ret = call(["./reload_haproxy.sh"])
   if ret != 0:
     print "reloading haproxy returned: ", ret
   else:
