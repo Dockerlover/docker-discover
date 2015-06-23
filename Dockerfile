@@ -20,6 +20,8 @@ VOLUME ["/var/run","/code"]
 # 复制代码
 COPY . /code
 WORKDIR /code
+# 暴露haproxy port
+EXPOSE 1936
 # 配置supervisord
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 # 启动supervisord
