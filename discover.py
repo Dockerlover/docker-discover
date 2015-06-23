@@ -8,6 +8,7 @@ POLL_TIMEOUT=60
 ETCD_HOST = os.environ["ETCD_HOST"]
 HOST_IP = os.environ["HOST_IP"]
 DOCKER_HOST = os.environ["DOCKER_HOST"]
+DOMAIN_NAME = os.environ["DOMAIN_NAME"]
 env = Environment(loader=PackageLoader('haproxy', 'templates'))
 
 def get_etcd_addr():
@@ -21,45 +22,40 @@ def get_etcd_addr():
   
   return host,port
 
+def reload_haproxy():
+  print "reload haproxy."
+
+def write_template(proxy_services):
+  print services
+
+
 def get_services():
 
   host, port = get_etcd_addr()
   client = etcd.Client(host=host, port=int(port))
+  services = client.read('/services')
+  proxy_services = []
+  for service in services:
+    service_key = service.get("Key",None)
+    service_value = service.get("Value",None)
+    if(service_key && service_value):
+      print 'Error:service not found'
+      continue
+    service_keys = service_key[1:].split("/")
+    service_values = service_value[1:].split("/")
+    if(len(service_keys)==4 && len(service_value)>0)
+      sub_domain = service_keys[2]+"."+service_keys[1]+"."+DOMAIN_NAME
+      host_name = service_keys[3][0:12]
+      for port in service_values:
+        port_values = service_values.split(":")
+        bind_port = port_values[3]
+        host_port = port_values[1]+":"+port_values[2]
+        
+        # write template
+        proxy_services.append({"sub_domain":sub_domain,"bind_port":bind_port,"host_name":host_name,"host_port":host_port})
   
-  _services = client.read('/services', dir=True)
-  print "[Info: print services]",_services
-  res_services = {}
-  for child in _services.children:
-    print "[Info: print service child key]",child.key[1:]
-    _prefix , container_name = child.key[1:].split("/")
-    print "[Info: print container_name]",container_name
-    image_name = client.read(child.key+'/image').value
-    container_status = client.read(child.key+'/status').value
-    _ports = client.read(child.key+'/ports', dir=True)
-    container_ports = []
-
-    for port in _ports.children:
-      _prefix , _name_prefix , _port_prefix , ip_port  = port.key[1:].split("/")
-      _type = client.read(port.key+'/type').value
-      ip , port = ip_port.split(":")
-      container_ports.append({"type":_type,"ip":ip,"port":port})
-      print "[Info: print ip and port]",_type,ip , port
-    res_services[container_name] = {
-      "name":container_name,
-      "image":image_name,
-      "status":container_status,
-      "ports":container_ports
-    }
-    
-  return res_services
-
-
-def write_template(services):
-  print services
-
-def reload_haproxy():
-  print "reload haproxy."
-  
+  write_template(proxy_services)
+  return proxy_services
 
 if __name__ == "__main__":
     while True:
