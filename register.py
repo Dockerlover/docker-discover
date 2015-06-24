@@ -105,20 +105,31 @@ def refresh(containers):
   host, port = get_etcd_addr()
   client = etcd.Client(host=host, port=int(port))
   
+  print "Info:refresh method"
+  
   for container in containers:
     container_id = container.get("Id",None)
     if(container_id==None):
       continue
     container_info = get_container_info(container_id)
     
+    print "Info:get container info"
+    
     image_id = container_info.get("Image",None)
     if(image_id==None):
       continue
     image_info = get_image_info(image_id)
+    print "Info:get image info"
     
     refresh_container(container_id,image_id,container_info)
+    print "Info:refresh container"
+    
     refresh_image(image_id,image_info)
+    print "Info:refresh image"
+    
     refresh_service(container_id,image_id,container_info,container)
+    print "Info:refresh service"
+    
     
   return containers
 
