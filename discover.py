@@ -44,6 +44,7 @@ def get_services():
   services = client.read('/services')
   proxy_services = []
   for service in services:
+    print service
     service_key = service.get("Key",None)
     service_value = service.get("Value",None)
     if(service_key and service_value):
