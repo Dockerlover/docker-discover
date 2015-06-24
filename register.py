@@ -81,10 +81,9 @@ def refresh_service(container_id,image_id,container_info,container):
 
   user_name = container_envs.get("USER_NAME","admin")
   container_state =  container.get("State",set([False, 'Running']))
-  print container_state
+
   container_running = 'Running' in container_state
 
-  print container_running
   container_ports = container.get("Ports",[])
   service_ports = []
   has_public_port = False
@@ -97,19 +96,15 @@ def refresh_service(container_id,image_id,container_info,container):
         "private_port":port.get("PrivatePort","") 
       })
   
-  print container_ports
-  
   container_ports = ""
   if(has_public_port):
     p_i = 0
     for port in service_ports:
-        container_ports +="/" + port.get("type","")+":"+HOST_IP+":"+str(port.get("public_port",""))+":"+port.get("private_port","")
+        container_ports +="/" + port.get("type","")+":"+HOST_IP+":"+str(port.get("public_port",""))+":"+str(port.get("private_port",""))
   if container_ports=="":
     container_ports = "/"
   
   client.write('/services/'+user_name+'/'+service_id+'/'+container_id, container_ports, ttl=3000 )
-  
-  print "client.write"
   
   return container
   
