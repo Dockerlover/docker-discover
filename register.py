@@ -92,7 +92,7 @@ def refresh_service(container_id,image_id,container_info,container):
   if(has_public_port):
     p_i = 0
     for port in service_ports:
-        container_ports +="/" port.get("type","")+":"+DOCKER_HOST+":"+port.get("public_port","")+":"+port.get("private_port","")
+        container_ports +="/" port.get("type","")+":"+HOST_IP+":"+port.get("public_port","")+":"+port.get("private_port","")
   if container_ports=="":
     container_ports = "/"
   
