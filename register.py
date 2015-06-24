@@ -65,6 +65,7 @@ def refresh_service(container_id,image_id,container_info,container):
   container_config = container_info.get("Config",None)
   image_name = container_config.get("Image","")
   container_env = container_config.get("Env","")
+  print container_env
   service_id = container_env.get("SERVICE_ID",None)
   
   if(service_id==None): 
