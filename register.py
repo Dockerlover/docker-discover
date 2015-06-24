@@ -28,6 +28,14 @@ def get_image_info(image_id):
   image = c.inspect_image(image_id)
   return image
 
+def get_container_env(envs):
+  res_envs = {}
+  for i in envs:
+    env = envs[i]
+    name,value = env.split("=")
+    res_envs[name] = value
+  return res_envs
+
 def get_etcd_addr():
   etcd_host = os.environ["ETCD_HOST"]
   
@@ -64,15 +72,15 @@ def refresh_image(image_id,image):
 def refresh_service(container_id,image_id,container_info,container):
   container_config = container_info.get("Config",None)
   image_name = container_config.get("Image","")
-  container_env = container_config.get("Env","")
-  print container_env
-  service_id = container_env.get("SERVICE_ID",None)
+  envs = container_config.get("Env","")
+  container_envs = get_container_env(envs)
+  service_id = container_envs.get("SERVICE_ID",None)
   
   if(service_id==None): 
     print "Error:No Service Id In Container["+HOST_IP+":"+container_id+"]!"
     return
 
-  user_name = container_env("USER_NAME","admin")
+  user_name = container_envs("USER_NAME","admin")
   container_state =  contianer.get("State",{"Running",False})
   container_running = container_state.get("Running",False)
   
