@@ -33,7 +33,6 @@ def get_container_env(envs):
   for env in envs:
     name,value = env.split("=")
     res_envs[name] = value
-  print res_envs
   return res_envs
 
 def get_etcd_addr():
@@ -80,7 +79,7 @@ def refresh_service(container_id,image_id,container_info,container):
     print "Error:No Service Id In Container["+HOST_IP+":"+container_id+"]!"
     return
 
-  user_name = container_envs("USER_NAME","admin")
+  user_name = container_envs.get("USER_NAME","admin")
   container_state =  contianer.get("State",{"Running",False})
   container_running = container_state.get("Running",False)
   
