@@ -49,6 +49,7 @@ def get_services():
     if(service_key and service_value):
       print 'Error:service not found'
       continue
+    print service_key[1:]
     service_keys = service_key[1:].split("/")
     service_values = service_value[1:].split("/")
     print service_keys,service_value
