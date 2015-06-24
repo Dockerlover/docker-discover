@@ -1,3 +1,6 @@
+git pull
+docker build -t docker-discover .
+
 docker stop discover
 docker rm discover
 
