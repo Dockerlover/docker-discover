@@ -68,7 +68,7 @@ def refresh_service(container_id,image_id,container_info,container):
   service_id = container_env.get("SERVICE_ID",None)
   
   if(service_id==None): 
-    print "Error:No Service Id In Container["+DOCKER_HOST+":"+container_id+"]!"
+    print "Error:No Service Id In Container["+HOST_IP+":"+container_id+"]!"
     return
 
   user_name = container_env("USER_NAME","admin")
