@@ -51,6 +51,7 @@ def get_services():
       continue
     service_keys = service_key[1:].split("/")
     service_values = service_value[1:].split("/")
+    print service_keys,service_value
     if(len(service_keys)==4 and len(service_value)>0):
       print service_keys,service_value
       sub_domain = service_keys[2]+"."+service_keys[1]+"."+DOMAIN_NAME
