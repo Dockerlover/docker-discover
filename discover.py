@@ -46,12 +46,12 @@ def get_services():
   for service in services:
     service_key = service.get("Key",None)
     service_value = service.get("Value",None)
-    if(service_key && service_value):
+    if(service_key and service_value):
       print 'Error:service not found'
       continue
     service_keys = service_key[1:].split("/")
     service_values = service_value[1:].split("/")
-    if(len(service_keys)==4 && len(service_value)>0)
+    if(len(service_keys)==4 and len(service_value)>0)
       sub_domain = service_keys[2]+"."+service_keys[1]+"."+DOMAIN_NAME
       host_name = service_keys[3][0:12]
       for port in service_values:
