@@ -80,10 +80,10 @@ def refresh_service(container_id,image_id,container_info,container):
     return
 
   user_name = container_envs.get("USER_NAME","admin")
-  container_state =  container.get("State",{"Running",False})
+  container_state =  container.get("State",set([False, 'Running']))
   print container_state
-  container_running = container_state.get("Running",False)
-  
+  container_running = container_state[0]
+
   print container_running
   container_ports = container.get("Ports",[])
   service_ports = []
