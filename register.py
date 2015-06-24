@@ -96,8 +96,43 @@ def refresh_service(container_id,image_id,container_info,container):
   if container_ports=="":
     container_ports = "/"
   
-  client.write('/services/'+user_name+'/'+service_id, 
-    '/'+DOCKER_HOST+'/'+image_name"/"+image_id+"/"+container_id+"/"+str(container_running)+container_ports, 
-    ttl=3000 )
+  client.write('/services/'+user_name+'/'+service_id+'/'+container_id, container_ports, ttl=3000 )
   
   return container
+  
+  
+def refresh(containers):
+  host, port = get_etcd_addr()
+  client = etcd.Client(host=host, port=int(port))
+  
+  for container in containers:
+    container_id = container.get("Id",None)
+    if(container_id==None) continue
+    container_info = get_container_info(container_id)
+    
+    image_id = container_info.get("Image",None)
+    if(image_id==None) continue
+    image_info = get_image_info(image_id)
+    
+    refresh_container(container_id,image_id,container_info)
+    refresh_image(image_id,image_info)
+    refresh_service(container_id,image_id,container_info,container)
+    
+  return containers
+
+if __name__ == "__main__":
+    host, port = get_etcd_addr()
+    client = etcd.Client(host=host, port=int(port))
+    while True:
+        try:
+            containers = get_containers()
+            if containers:
+                print "containers refreshed. "
+                refresh(containers)
+                time.sleep(POLL_TIMEOUT)
+                continue
+        
+        except Exception, e:
+            print "Error:", e
+
+        time.sleep(POLL_TIMEOUT)
