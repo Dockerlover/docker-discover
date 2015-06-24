@@ -1,3 +1,4 @@
+git pull
 HOST_IP=$(hostname --all-ip-addresses | awk '{print $1}')
 ETCD_HOST=$HOST_IP:4001
 
