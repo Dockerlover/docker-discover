@@ -30,8 +30,7 @@ def get_image_info(image_id):
 
 def get_container_env(envs):
   res_envs = {}
-  for i in envs:
-    env = envs[i]
+  for env in envs:
     name,value = env.split("=")
     res_envs[name] = value
   return res_envs
