@@ -31,9 +31,9 @@ def get_image_info(image_id):
 def get_container_env(envs):
   res_envs = {}
   for env in envs:
-    print env
     name,value = env.split("=")
     res_envs[name] = value
+  print res_envs
   return res_envs
 
 def get_etcd_addr():
