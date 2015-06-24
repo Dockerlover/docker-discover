@@ -45,8 +45,8 @@ def get_services():
   proxy_services = []
   for service in infos.children:
     print service
-    service_key = service.get("Key",None)
-    service_value = service.get("Value",None)
+    service_key = service.key
+    service_value = service.value
     if(service_key and service_value):
       print 'Error:service not found'
       continue
