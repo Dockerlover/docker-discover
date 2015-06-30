@@ -46,7 +46,7 @@ def get_services():
   for service in infos.children:
     service_key = service.key
     service_value = service.value
-    
+    print service_key,service_value
     if((service_key is None) or (service_value is None)):
       print 'Error:service not found'
       continue
@@ -55,7 +55,7 @@ def get_services():
     service_values = service_value[1:].split("/")
 
     if(len(service_keys)==4 and len(service_values)>0):
-      print service_keys,service_value
+      print service_keys,service_values
       sub_domain = service_keys[2]+"."+service_keys[1]+"."+DOMAIN_NAME
       host_name = service_keys[3][0:12]
       for port in service_values:
