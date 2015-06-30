@@ -2,6 +2,7 @@ from docker import Client
 import etcd
 import time
 import os
+from subprocess import call
 from jinja2 import Environment, PackageLoader
 
 POLL_TIMEOUT=60
