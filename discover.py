@@ -47,7 +47,7 @@ def get_services():
     service_key = service.key
     service_value = service.value
     
-    if(!service_key or !service_value):
+    if((service_key is None) or (service_value is None)):
       print 'Error:service not found'
       continue
 
