@@ -41,7 +41,7 @@ def get_services():
 
   host, port = get_etcd_addr()
   client = etcd.Client(host=host, port=int(port))
-  infos = client.read('/services')
+  infos = client.read('/services', recursive=True, dir=True)
   proxy_services = []
   for service in infos.children:
     service_key = service.key
