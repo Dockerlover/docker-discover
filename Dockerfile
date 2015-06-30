@@ -20,6 +20,7 @@ VOLUME ["/var/run","/code"]
 # 复制代码
 COPY . /code
 WORKDIR /code
+RUN chmod +x *.sh
 # 暴露haproxy port
 EXPOSE 1936
 # 配置supervisord
