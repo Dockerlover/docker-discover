@@ -20,7 +20,7 @@ listen stats :1936
     #stats auth Username:Password
 
 {% for service in services %}
-listen {{ service.sub_domain }}
+listen {{ service.sub_domain }}:{{ service.bind_port }}
     bind *:{{ service.bind_port }}
     server {{ service.host_name }} {{ service.host_port }} check inter 2s rise 3 fall 2
 {% endfor %}
