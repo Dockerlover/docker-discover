@@ -41,20 +41,20 @@ def get_services():
 
   host, port = get_etcd_addr()
   client = etcd.Client(host=host, port=int(port))
-  infos = client.read('/services/admin')
+  infos = client.read('/services')
   proxy_services = []
   for service in infos.children:
-    print service
     service_key = service.key
     service_value = service.value
+    
     if(service_key and service_value):
       print 'Error:service not found'
       continue
-    print service_key[1:]
+
     service_keys = service_key[1:].split("/")
     service_values = service_value[1:].split("/")
-    print service_keys,service_value
-    if(len(service_keys)==4 and len(service_value)>0):
+
+    if(len(service_keys)==4 and len(service_values)>0):
       print service_keys,service_value
       sub_domain = service_keys[2]+"."+service_keys[1]+"."+DOMAIN_NAME
       host_name = service_keys[3][0:12]
